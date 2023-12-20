@@ -1,5 +1,5 @@
-Total number of website: 42
-List of website: ['google.mu', 'myt.mu', 'mcb.mu', 'okta.com', 'topfmradio.com', 'freshdesk.com', 'govmu.org', 'lexpress.mu', 'inside.news', 'intnet.mu', 'priceguru.mu', 'myjob.mu', 'mauritiustelecom.com', 'gceguide.com', 'vbazz.com', 'mauritiusturfclub.com', 'uom.ac.mu', 'lemauricien.com', 'france24.com', 'newsnow.co.uk', 'ib.mcb.mu', 'moodfeed.net', 'pixhost.to', 'journee-mondiale.com', 'frappe.cloud', 'partsouq.com', 'riddimsworld.com', 'fnb.co.za', 'naukrigulf.com', 'airmauritius.com', 'spikbuy.network', 'sfimg.com', 'mra.mu', 'mega.mu', 'instantly.ai', 'ifvod.tv', 'refinitiv.com', 'mycar.mu', 'canalplus.com', 'devskiller.com', 'Ebmu.sbmgroup.mu', 'Cyberstorm.mu']
+Total number of website: 47
+List of website: ['google.mu', 'myt.mu', 'mcb.mu', 'okta.com', 'topfmradio.com', 'freshdesk.com', 'govmu.org', 'lexpress.mu', 'inside.news', 'intnet.mu', 'priceguru.mu', 'myjob.mu', 'mauritiustelecom.com', 'gceguide.com', 'vbazz.com', 'mauritiusturfclub.com', 'uom.ac.mu', 'lemauricien.com', 'france24.com', 'newsnow.co.uk', 'ib.mcb.mu', 'moodfeed.net', 'pixhost.to', 'journee-mondiale.com', 'frappe.cloud', 'partsouq.com', 'riddimsworld.com', 'fnb.co.za', 'naukrigulf.com', 'airmauritius.com', 'spikbuy.network', 'sfimg.com', 'mra.mu', 'mega.mu', 'instantly.ai', 'ifvod.tv', 'refinitiv.com', 'mycar.mu', 'canalplus.com', 'devskiller.com', 'Ebmu.sbmgroup.mu', 'Cyberstorm.mu', 'triobelisk.bandcamp.mu', 'outputmessage.bandcamp.mu', 'curtinmauritius.ac.mu', 'abcbanking.mu', 'radiologymauritius.mu']
 Number of errors: 4
 List of website with errors: ['mauritiustelecom.com', 'mauritiusturfclub.com', 'moodfeed.net', 'refinitiv.com']
-Percentage of error: 9.523809523809524
+Percentage of error: 8.51063829787234

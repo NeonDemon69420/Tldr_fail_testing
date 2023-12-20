@@ -1,7 +1,6 @@
+import os
 Error_Count = 0
 
-import os
-import sys
 
 list = ["google.mu", "myt.mu", "mcb.mu", "okta.com", "topfmradio.com", "freshdesk.com", "govmu.org", "lexpress.mu",
         "inside.news", "intnet.mu", "priceguru.mu", "myjob.mu", "mauritiustelecom.com", "gceguide.com", "vbazz.com",
@@ -9,7 +8,8 @@ list = ["google.mu", "myt.mu", "mcb.mu", "okta.com", "topfmradio.com", "freshdes
         "moodfeed.net", "pixhost.to", "journee-mondiale.com", "frappe.cloud", "partsouq.com", "riddimsworld.com",
         "fnb.co.za", "naukrigulf.com", "airmauritius.com", "spikbuy.network", "sfimg.com", "mra.mu", "mega.mu",
         "instantly.ai", "ifvod.tv", "refinitiv.com", "mycar.mu", "canalplus.com", "devskiller.com", "Ebmu.sbmgroup.mu",
-        "Cyberstorm.mu"]
+        "Cyberstorm.mu", "triobelisk.bandcamp.mu", "outputmessage.bandcamp.mu", "curtinmauritius.ac.mu", "abcbanking.mu",
+        "radiologymauritius.mu"]
 
 error_list = []
 Site_count = len(list)
