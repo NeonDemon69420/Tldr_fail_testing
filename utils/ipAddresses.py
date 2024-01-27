@@ -39,3 +39,9 @@ def number_to_ip(num):
         num >>= 8
 
     return ".".join(parts)
+
+
+list = extractIPAddresses()
+
+for item in list:
+    print(item)
