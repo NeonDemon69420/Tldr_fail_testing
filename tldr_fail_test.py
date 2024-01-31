@@ -136,8 +136,8 @@ print("connection or sends something else, the server is misbehaving.")
 print()
 
 print("Sending the ClientHello in a single write:")
-sock = socket.create_connection(addr)
 try:
+    sock = socket.create_connection(addr)
     sock.send(client_hello)
     print(sock.recv(256))
 except Exception as e:
@@ -145,8 +145,8 @@ except Exception as e:
 print()
 
 print("Sending the ClientHello in two separate writes:")
-sock = socket.create_connection(addr)
 try:
+    sock = socket.create_connection(addr)
     half = len(client_hello)//2
     sock.send(client_hello[:half])
     time.sleep(1)
@@ -167,17 +167,17 @@ print("today. This script does not reproduce some padding behavior.)")
 print()
 
 print("Sending the ClientHello in a single write:")
-sock = socket.create_connection(addr)
-sock.send(client_hello)
 try:
+    sock = socket.create_connection(addr)
+    sock.send(client_hello)
     print(sock.recv(256))
 except Exception as e:
     print(e)
 print()
 
 print("Sending the ClientHello in two separate writes:")
-sock = socket.create_connection(addr)
 try:
+    sock = socket.create_connection(addr)
     half = len(client_hello)//2
     sock.send(client_hello[:half])
     time.sleep(1)
