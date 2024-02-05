@@ -3,7 +3,7 @@ from utils.multiprocessing import start_multiprocessing, worker_classify_ip_addr
 with open('./results/vulnerability_result/vulnerable_ip_addresses.txt', 'r') as file:
     ip_addresses = [line.replace("\n", "") for line in file.readlines()]
 
-dict_classified_ip_addresses = start_multiprocessing(43, worker_classify_ip_addresses, classify_ip_addresses_return_function, *ip_addresses)
+dict_classified_ip_addresses = start_multiprocessing(252, worker_classify_ip_addresses, classify_ip_addresses_return_function, *ip_addresses)
 
 
 with open("./results/classified_by_provider/classified_ip_addresses_overview.txt", "w") as file:
