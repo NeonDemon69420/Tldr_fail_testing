@@ -176,7 +176,7 @@ except Exception as e:
 print()
 
 print("Sending the ClientHello in two separate writes:")
-sock = socket.create_connection(addr)
+
 try:
     sock = socket.create_connection(addr)
     half = len(client_hello)//2

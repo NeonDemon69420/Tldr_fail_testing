@@ -79,15 +79,11 @@ def get_valid_ip_addresses(ip):
     if len(extracted_result) > 0:
         if "open-443" in extracted_result:
             print(f"Port 80 and 443 is open for ip address {ip}")
-            file = open("./results/ip_addresses_with_port80and443_open.txt", "a")
+            file = open("./results/ip_addresses_with_port_open/ip_addresses_with_port80and443_open.csv", "a")
             file.writelines(ip + "\n")
             file.close()
             return True
         else:
-            print(f"Only port 80 is open for ip address {ip}")
-            file = open("./results/ip_addresses_with_port80_open.txt", "a")
-            file.writelines(ip + "\n")
-            file.close()
             return False
     else:
         print(f"Port 80 and 443 is not open for ip address {ip}")
