@@ -4,8 +4,6 @@ import sys
 
 CIPHERS = 'ALL:eNULL'
 host = sys.argv[1]
-max_len = max(len(cipher) for cipher in subprocess.check_output(['openssl', 'ciphers', CIPHERS]).decode().split(':'))
-
 ciphers = [cipher.replace("\n", "") for cipher in subprocess.check_output(['openssl', 'ciphers', '-tls1_3', '-s', CIPHERS]).decode().split(':')]
 
 for cipher in ciphers:

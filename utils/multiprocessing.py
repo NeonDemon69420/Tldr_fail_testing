@@ -43,6 +43,28 @@ def worker_classify_ip_addresses(process_num, manager, number_of_processes, retu
         except subprocess.TimeoutExpired:
             append_to_array(manager, "Unknown", ip_address, return_dictionary)
 
+def worker_check_if_tls_enabled(process_num, manager, number_of_processes, return_dictionary, *args):
+    list_length = int(len(args[0])/number_of_processes)
+    list = args[0][list_length*process_num:list_length*(process_num+1)]
+
+    for i, ip_address in enumerate(list):
+        try:
+            result = subprocess.run(["nmap", "--script", "./utils/test_tls.nse", "-p", "443", ip_address, "-Pn"], stdout=subprocess.PIPE, text=True, timeout=120)
+            print(result.stdout)
+            if "No supported ciphers found" in result.stdout:
+                file = open("./results/tls_result/ip_addresses_with_no_tls_enabled.txt", "a")
+                file.writelines(ip_address + "\n")
+                file.close()
+            else:
+                file = open("./results/tls_result/ip_addresses_with_tls_enabled.txt", "a")
+                file.writelines(ip_address + "\n")
+                file.close()
+        except subprocess.TimeoutExpired:
+            file = open("./results/tls_result/ip_addresses_with_no_tls_enabled.txt", "a")
+            file.writelines(ip_address + "\n")
+            file.close()
+        print(f"Process {process_num} is {((i+1)/len(list))*100:.2f}% done.")
+
 
 
 def start_multiprocessing(number_of_processes, worker, multiprocessing_return_function, *args):
@@ -95,3 +117,6 @@ def extract_netname(result):
     netname_line = result[netname_index:netname_end_index]
     netname_parts = netname_line.split(':')
     return netname_parts[-1].strip()
+
+def empty(arg):
+    return arg
