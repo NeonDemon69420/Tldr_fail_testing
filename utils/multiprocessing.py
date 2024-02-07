@@ -49,10 +49,10 @@ def worker_check_if_tls_enabled(process_num, manager, number_of_processes, retur
 
     for i, ip_address in enumerate(list):
         try:
-            result = subprocess.run(["nmap", "--script", "./utils/test_tls.nse", "-p", "443", ip_address, "-Pn"], stdout=subprocess.PIPE, text=True, timeout=120)
+            result = subprocess.run(["nmap", "-p", "443", ip_address, "-Pn"], stdout=subprocess.PIPE, text=True, timeout=120)
             print(result.stdout)
-            if "No supported ciphers found" in result.stdout:
-                file = open("./results/tls_result/ip_addresses_with_no_tls_enabled.txt", "a")
+            if "filtered" in result.stdout:
+                file = open("./results/tls_result/ip_addresses_with_firewall.txt", "a")
                 file.writelines(ip_address + "\n")
                 file.close()
             else:
@@ -60,7 +60,7 @@ def worker_check_if_tls_enabled(process_num, manager, number_of_processes, retur
                 file.writelines(ip_address + "\n")
                 file.close()
         except subprocess.TimeoutExpired:
-            file = open("./results/tls_result/ip_addresses_with_no_tls_enabled.txt", "a")
+            file = open("./results/tls_result/ip_addresses_with_firewall.txt", "a")
             file.writelines(ip_address + "\n")
             file.close()
         print(f"Process {process_num} is {((i+1)/len(list))*100:.2f}% done.")
