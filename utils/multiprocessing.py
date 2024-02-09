@@ -17,15 +17,14 @@ def worker_check_ip_addresses_tldr(process_num, manager, number_of_processes, re
 
     for i, ip_address in enumerate(list):
         print(f"Process {process_num} is {(i/len(list))*100:.2f}% done.")
-        try:
-            result = subprocess.run(["python3", "./tldr_fail_test.py", ip_address], stdout=subprocess.PIPE, text=True, timeout=10)
+        
+        result = subprocess.run(["python3", "./tldr_fail_test.py", ip_address], stdout=subprocess.PIPE, text=True)
 
-            if not "[WinError 10054]" in result.stdout:
-                append_to_array(manager, str(process_num), (ip_address, False), return_dictionary)
-            else:
-                append_to_array(manager, str(process_num), (ip_address, True), return_dictionary)
-        except subprocess.TimeoutExpired:
+        if not "[WinError 10054]" in result.stdout:
+            append_to_array(manager, str(process_num), (ip_address, False), return_dictionary)
+        else:
             append_to_array(manager, str(process_num), (ip_address, True), return_dictionary)
+
 
 def worker_classify_ip_addresses(process_num, manager, number_of_processes, return_dictionary, *args):
     list_length = int(len(args[0])/number_of_processes)
@@ -43,7 +42,7 @@ def worker_classify_ip_addresses(process_num, manager, number_of_processes, retu
         except subprocess.TimeoutExpired:
             append_to_array(manager, "Unknown", ip_address, return_dictionary)
 
-def worker_check_if_tls_enabled(process_num, manager, number_of_processes, return_dictionary, *args):
+def worker_check_if_behind_firewall(process_num, manager, number_of_processes, return_dictionary, *args):
     list_length = int(len(args[0])/number_of_processes)
     list = args[0][list_length*process_num:list_length*(process_num+1)]
 
@@ -52,18 +51,35 @@ def worker_check_if_tls_enabled(process_num, manager, number_of_processes, retur
             result = subprocess.run(["nmap", "-p", "443", ip_address, "-Pn"], stdout=subprocess.PIPE, text=True, timeout=120)
             print(result.stdout)
             if "filtered" in result.stdout:
-                file = open("./results/tls_result/ip_addresses_with_firewall.txt", "a")
+                file = open("./results/firewall_result/ip_addresses_with_firewall.txt", "a")
                 file.writelines(ip_address + "\n")
                 file.close()
             else:
-                file = open("./results/tls_result/ip_addresses_with_tls_enabled.txt", "a")
+                file = open("./results/firewall_result/ip_addresses_with_no_firewall.txt", "a")
                 file.writelines(ip_address + "\n")
                 file.close()
         except subprocess.TimeoutExpired:
-            file = open("./results/tls_result/ip_addresses_with_firewall.txt", "a")
+            file = open("./results/firewall_result/ip_addresses_with_firewall.txt", "a")
             file.writelines(ip_address + "\n")
             file.close()
         print(f"Process {process_num} is {((i+1)/len(list))*100:.2f}% done.")
+
+def worker_check_tls_enabled(process_num, manager, number_of_processes, return_dictionary, *args):
+    list_length = int(len(args[0])/number_of_processes)
+    list = args[0][list_length*process_num:list_length*(process_num+1)]
+
+    for i, ip_address in enumerate(list):
+        tls_result = subprocess.run(["openssl", "s_client", "-connect", f"{ip_address}:443"], input=b'', stderr=subprocess.PIPE, stdout=subprocess.PIPE)
+        output = tls_result.stdout.decode()
+        if "Cipher is (NONE)" in output:
+            file = open("./results/tls_result/ip_addresses_with_tls_disabled.txt", "a")
+            file.writelines(ip_address + "\n")
+            file.close()
+        else:
+            file = open("./results/tls_result/ip_addresses_with_tls_enabled.txt", "a")
+            file.writelines(ip_address + "\n")
+            file.close()
+        print(f"Process {process_num} is {(i/len(list))*100:.2f}% done.")
 
 
 
