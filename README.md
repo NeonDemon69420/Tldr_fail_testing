@@ -56,6 +56,7 @@ To run the script, we highly suggest you use linux as it requires `OpenSSL` to w
 3. Run command `python3 pip install -r requirements.txt`. This will install the required dependencies for python.
 3. Run the scripts in the following order:
    - `test_for_port.py`
+   - `test_for_firewall.py`
    - `test_vulnerability.py`
    - `classify_ip_addresses.py` (optional)
    - `test_popular_websites.py` (optional)
