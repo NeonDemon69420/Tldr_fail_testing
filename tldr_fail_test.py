@@ -10,15 +10,15 @@ import time
 
 def u8_prefix(b):
     assert len(b) < (1 << 8)
-    return len(b).to_bytes(1) + b
+    return len(b).to_bytes(1, 'big') + b
 
 def u16_prefix(b):
     assert len(b) < (1 << 16)
-    return len(b).to_bytes(2) + b
+    return len(b).to_bytes(2, 'big') + b
 
 def u24_prefix(b):
     assert len(b) < (1 << 24)
-    return len(b).to_bytes(3) + b
+    return len(b).to_bytes(3, 'big') + b
 
 
 # A sample ClientHello body up to the extension list.
@@ -82,18 +82,18 @@ OTHER_EXTENSIONS = bytes.fromhex(
     "030303020301")
 
 def make_extension(typ, body):
-    return typ.to_bytes(2) + u16_prefix(body)
+    return typ.to_bytes(2, 'big') + u16_prefix(body)
 
 def make_server_name(name):
     body = u16_prefix(b"\x00" + u16_prefix(name.encode("ascii")))
     return make_extension(0, body)
 
 def make_supported_groups(groups):
-    body = u16_prefix(b"".join(g.to_bytes(2) for g in groups))
+    body = u16_prefix(b"".join(g.to_bytes(2, 'big') for g in groups))
     return make_extension(10, body)
 
 def make_key_share_entry(group, val):
-    return group.to_bytes(2) + u16_prefix(val)
+    return group.to_bytes(2, 'big') + u16_prefix(val)
 
 def make_key_share(entries):
     body = u16_prefix(
@@ -136,8 +136,8 @@ print("connection or sends something else, the server is misbehaving.")
 print()
 
 print("Sending the ClientHello in a single write:")
+sock = socket.create_connection(addr)
 try:
-    sock = socket.create_connection(addr)
     sock.send(client_hello)
     print(sock.recv(256))
 except Exception as e:
@@ -145,8 +145,8 @@ except Exception as e:
 print()
 
 print("Sending the ClientHello in two separate writes:")
+sock = socket.create_connection(addr)
 try:
-    sock = socket.create_connection(addr)
     half = len(client_hello)//2
     sock.send(client_hello[:half])
     time.sleep(1)
@@ -167,18 +167,17 @@ print("today. This script does not reproduce some padding behavior.)")
 print()
 
 print("Sending the ClientHello in a single write:")
+sock = socket.create_connection(addr)
+sock.send(client_hello)
 try:
-    sock = socket.create_connection(addr)
-    sock.send(client_hello)
     print(sock.recv(256))
 except Exception as e:
     print(e)
 print()
 
 print("Sending the ClientHello in two separate writes:")
-
+sock = socket.create_connection(addr)
 try:
-    sock = socket.create_connection(addr)
     half = len(client_hello)//2
     sock.send(client_hello[:half])
     time.sleep(1)
